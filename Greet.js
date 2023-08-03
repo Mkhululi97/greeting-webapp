@@ -38,6 +38,7 @@ export default function Greet() {
   let greetCounter = 0;
   let users = [];
   let usernameTrimmed = "";
+  let greetMsg = "";
   let errorMsg = "";
   let firstLetter, restOfLetters;
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
@@ -55,21 +56,26 @@ export default function Greet() {
     return greetCounter;
   }
   function greetUserWithLanguage(language, username) {
-    usernameTrimmed = username.trim();
-    if (lettersOnlyRegex.test(usernameTrimmed)) {
-      let arrName = usernameTrimmed.toLowerCase().split("");
-      [firstLetter, ...restOfLetters] = arrName;
-      let capitalizeName = firstLetter.toUpperCase() + restOfLetters.join("");
-      if (language === "isiZulu") {
-        return `Sawubona ${capitalizeName}`;
-      } else if (language === "English") {
-        return `Hello ${capitalizeName}`;
-      } else if (language === "isiXhosa") {
-        return `Molo ${capitalizeName}`;
+    if (username !== undefined) {
+      usernameTrimmed = username.trim();
+      if (lettersOnlyRegex.test(usernameTrimmed)) {
+        let arrName = usernameTrimmed.toLowerCase().split("");
+        [firstLetter, ...restOfLetters] = arrName;
+        let capitalizeName = firstLetter.toUpperCase() + restOfLetters.join("");
+        if (language === "isiZulu") {
+          greetMsg = `Sawubona ${capitalizeName}`;
+        } else if (language === "English") {
+          greetMsg = `Hello ${capitalizeName}`;
+        } else if (language === "isiXhosa") {
+          greetMsg = `Molo ${capitalizeName}`;
+        }
+      } else {
+        return "";
       }
-    } else {
-      return "";
     }
+  }
+  function userGreetedIn() {
+    return greetMsg;
   }
   function displayErrorMsg(username, language) {
     if (username === "") {
@@ -101,5 +107,6 @@ export default function Greet() {
     displayErrorMsg,
     resetCounter,
     nameWithNumberError,
+    userGreetedIn,
   };
 }

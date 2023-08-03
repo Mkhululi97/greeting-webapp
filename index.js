@@ -58,27 +58,25 @@ app.use(flash());
 // CREATE HOME/DEFAULT ROUTE
 app.get("/", function (req, res) {
   res.render("home", {
-    name: Greet.getName(),
+    // use factory function responsible for returning greet
+    //   messages. Set it to a variable to be used
+    //   in the template.
+    greetMsg: Greet.userGreetedIn(),
   });
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", function (req, res) {
   // send username to server each time 'greet btn' is clicked.
-  Greet.setName(req.body.userInput);
+  Greet.greetUserWithLanguage(req.body.language, req.body.userInput);
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
 app.get("/greeted", (req, res) => {
   // create a array with all greeted users
-  let usersArr = Greet.getGreetedUsers();
   // send array to handlebars template on the greeted.handlebars file
-  res.render("greeted", { usersArr });
 });
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
-app.get("/counter/:currentUsername", (req, res) => {
-  const currentUsername = req.params.currentUsername;
-  let usersObj = Greet.getNamesCountMap();
-});
+app.get("/counter/:currentUsername", (req, res) => {});
 /* -------------------- ALL ROUTES -------------------- */
 
 // CREATE PORT VARIABLE
