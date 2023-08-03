@@ -52,11 +52,21 @@ app.use(flash());
 // app.get("/profile", (req, res) => {
 //   res.send(req.flash("message"));
 // });
+// app.get("/payment", (req, res) => {
+// first para is for message variable and second para
+//    is for the actual message.
+// req.flash("payment", "make the payments");
+// retrieve the actual message, by using the
+//    message variable name.
+// res.send(req.flash("payment"));
+// });
+// How to use express flash
 
 /* -------------------- ALL ROUTES -------------------- */
 
 // CREATE HOME/DEFAULT ROUTE
 app.get("/", function (req, res) {
+  req.flash("errorText", Greet.currentErrorMsg());
   res.render("home", {
     // use factory function responsible for returning greet
     //   messages. Set it to a variable to be used
@@ -64,12 +74,16 @@ app.get("/", function (req, res) {
     greetMsg: Greet.userGreetedIn(),
     counter: Greet.peopleGreeted(),
   });
+  // error: Greet.currentErrorMsg(),
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", function (req, res) {
-  // send username to server each time 'greet btn' is clicked.
+  // send username, language, error message
+  //   to server each time 'greet btn' is clicked.
   Greet.greetUserWithLanguage(req.body.language, req.body.userInput);
   Greet.peopleCounter(req.body.userInput);
+  Greet.displayErrorMsg(req.body.userInput, req.body.language);
+  // console.log(`lan:=>${req.body.language},nam:=>${req.body.userInput === ""}`);
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
@@ -79,6 +93,11 @@ app.get("/greeted", (req, res) => {
 });
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
 app.get("/counter/:currentUsername", (req, res) => {});
+// CREATE A ROUTE THAT RESTS THE GREETINGS APP
+app.post("/reset", (req, res) => {
+  console.log(Greet.resetCounter());
+  res.redirect("/");
+});
 /* -------------------- ALL ROUTES -------------------- */
 
 // CREATE PORT VARIABLE

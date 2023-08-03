@@ -78,15 +78,19 @@ export default function Greet() {
     return greetMsg;
   }
   function displayErrorMsg(username, language) {
-    if (username === "") {
-      errorMsg = "Please enter your name";
+    if (username !== undefined) {
+      username === "" ? (errorMsg = "Please enter your name") : "";
+
+      language === undefined ? (errorMsg = "Please select a language") : "";
+
+      username === "" && language === undefined
+        ? (errorMsg = "Please select a language and enter your name")
+        : "";
+
+      username !== "" && language !== undefined ? (errorMsg = "") : "";
     }
-    if (language === null) {
-      errorMsg = "Please select a language";
-    }
-    if (username === "" && language === null) {
-      errorMsg = "Please select a language and enter your name";
-    }
+  }
+  function currentErrorMsg() {
     return errorMsg;
   }
   function nameWithNumberError(username) {
@@ -97,7 +101,8 @@ export default function Greet() {
     }
   }
   function resetCounter() {
-    return (greetCounter = 0);
+    greetCounter = 0;
+    users = [];
   }
 
   return {
@@ -108,5 +113,6 @@ export default function Greet() {
     resetCounter,
     nameWithNumberError,
     userGreetedIn,
+    currentErrorMsg,
   };
 }
