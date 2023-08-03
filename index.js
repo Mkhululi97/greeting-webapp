@@ -61,7 +61,6 @@ app.get("/", function (req, res) {
     name: Greet.getName(),
   });
 });
-
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", function (req, res) {
   // send username to server each time 'greet btn' is clicked.
@@ -74,6 +73,11 @@ app.get("/greeted", (req, res) => {
   let usersArr = Greet.getGreetedUsers();
   // send array to handlebars template on the greeted.handlebars file
   res.render("greeted", { usersArr });
+});
+// CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
+app.get("/counter/:currentUsername", (req, res) => {
+  const currentUsername = req.params.currentUsername;
+  let usersObj = Greet.getNamesCountMap();
 });
 /* -------------------- ALL ROUTES -------------------- */
 
