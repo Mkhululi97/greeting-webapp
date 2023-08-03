@@ -24,13 +24,19 @@ div.flex {
 .hidden {
   display: none;
 }
-.greetings-text,
+.counter-text,
+.output-str,
 .greeting,
 button,
 label {
   color: #344e41;
 }
-.greet-me-btn {
+.error-text {
+  color: rgb(205, 9, 9);
+  font-size: 16px;
+}
+.greet-me-btn,
+.radio-btn {
   cursor: pointer;
 }
 .greeting {
@@ -54,10 +60,24 @@ button {
   background-color: #588157;
   color: #dad7cd;
 }
-.greetings-text {
+.counter-text {
   font-size: 40px;
   margin-block: 10px;
   margin-left: 10px;
+}
+.radio-btns {
+  margin-bottom: 14px;
+}
+.radio-btn {
+  margin-left: 14px;
+}
+.reset-btn {
+  border: 1px solid #dad7cd;
+}
+.output-str {
+  font-size: 20px;
+  margin-bottom: 45px;
+  font-weight: 500;
 }
 @media (min-width: 788px) {
   .greeting {
@@ -68,11 +88,12 @@ button {
   .text-input {
     margin-right: 10px;
   }
-  .greetings-text {
+  .counter-text {
     font-size: 50px;
   }
   label,
-  .greet-me-btn {
+  .greet-me-btn,
+  .reset-btn {
     font-size: 16px;
     font-weight: 400;
   }
