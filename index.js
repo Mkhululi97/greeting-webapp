@@ -62,12 +62,14 @@ app.get("/", function (req, res) {
     //   messages. Set it to a variable to be used
     //   in the template.
     greetMsg: Greet.userGreetedIn(),
+    counter: Greet.peopleGreeted(),
   });
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", function (req, res) {
   // send username to server each time 'greet btn' is clicked.
   Greet.greetUserWithLanguage(req.body.language, req.body.userInput);
+  Greet.peopleCounter(req.body.userInput);
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
