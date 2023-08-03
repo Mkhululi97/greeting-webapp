@@ -35,30 +35,18 @@ describe("Testing Greet Factory Function", function () {
   });
   it("should greet user in the language they selected", function () {
     let greet = Greet();
-    assert.equal(
-      "Sawubona Mkhululi",
-      greet.greetUserWithLanguage("isiZulu", "Mkhululi")
-    );
-    assert.equal(
-      "Sawubona Londeka",
-      greet.greetUserWithLanguage("isiZulu", "Londeka")
-    );
-    assert.equal(
-      "Sawubona Mashoto",
-      greet.greetUserWithLanguage("isiZulu", "Mashoto")
-    );
-    assert.equal(
-      "Sawubona Akhona",
-      greet.greetUserWithLanguage("isiZulu", "Akhona")
-    );
-    assert.equal(
-      "Hello Akhona",
-      greet.greetUserWithLanguage("English", "Akhona")
-    );
-    assert.equal(
-      "Molo Mashoto",
-      greet.greetUserWithLanguage("isiXhosa", "Mashoto")
-    );
+    greet.greetUserWithLanguage("isiZulu", "Mkhululi");
+    assert.equal("Sawubona Mkhululi", greet.userGreetedIn());
+    greet.greetUserWithLanguage("isiZulu", "Londeka");
+    assert.equal("Sawubona Londeka", greet.userGreetedIn());
+    greet.greetUserWithLanguage("isiZulu", "Mashoto");
+    assert.equal("Sawubona Mashoto", greet.userGreetedIn());
+    greet.greetUserWithLanguage("isiZulu", "Akhona");
+    assert.equal("Sawubona Akhona", greet.userGreetedIn());
+    greet.greetUserWithLanguage("English", "Akhona");
+    assert.equal("Hello Akhona", greet.userGreetedIn());
+    greet.greetUserWithLanguage("isiXhosa", "Mashoto");
+    assert.equal("Molo Mashoto", greet.userGreetedIn());
   });
   describe("Shows Error Message", function () {
     it("if the input field is empty", function () {
