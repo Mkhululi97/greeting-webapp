@@ -1,0 +1,79 @@
+/* https://coolors.co/palette/dad7cd-a3b18a-588157-3a5a40-344e41 */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #a3b18a;
+  font-family: "Roboto", sans-serif;
+}
+article {
+  text-align: center;
+  padding: 10px;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.flex {
+  margin-top: 5px;
+}
+.hidden {
+  display: none;
+}
+.greetings-text,
+.greeting,
+button,
+label {
+  color: #344e41;
+}
+.greet-me-btn {
+  cursor: pointer;
+}
+.greeting {
+  border: 1px solid #344e41;
+  padding-block: 15px;
+  margin-bottom: 20px;
+  font-size: 30px;
+  letter-spacing: 0.9px;
+}
+.text-input {
+  padding: 10px 10px;
+  margin-right: 5px;
+}
+button {
+  background: none;
+  padding: 10px 25px;
+  border-radius: 4px;
+}
+.greet-me-btn {
+  border: none;
+  background-color: #588157;
+  color: #dad7cd;
+}
+.greetings-text {
+  font-size: 40px;
+  margin-block: 10px;
+  margin-left: 10px;
+}
+@media (min-width: 788px) {
+  .greeting {
+    padding-block: 20px;
+    font-size: 40px;
+    margin-bottom: 30px;
+  }
+  .text-input {
+    margin-right: 10px;
+  }
+  .greetings-text {
+    font-size: 50px;
+  }
+  label,
+  .greet-me-btn {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}

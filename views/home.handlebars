@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/greet.css" />
+    <title>Greetings Webapp</title>
+  </head>
+  <body>
+    <article>
+      <div class="container">
+        <h1 class="greeting">Greeting</h1>
+        <form action="/greetings" method="POST">
+            <label class="inputName" for="name" value="{{userName}}">Please Enter Your Name:</label>
+            <p class="error-text hidden">please enter your name</p>
+            <div class="flex">
+              <input type="text" placeholder="Enter your name" class="text-input" name="userInput"/>
+            </div>
+            <div class="flex">
+              <button class="btn greet-me-btn" type="submit">Greet Me</button>
+              <h2 class="greetings-text">{{name}}</h2>
+            </div>
+        </form>
+    </article>
+  </body>
+</html>
