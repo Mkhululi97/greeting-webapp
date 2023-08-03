@@ -4,6 +4,10 @@ import express from "express";
 import { engine } from "express-handlebars";
 /* ##### BRING IN BOBYPARSER ##### */
 import bodyParser from "body-parser";
+/* ##### BRING IN EXPRESS-FLASH ##### */
+import flash from "express-flash";
+/* ##### BRING IN EXPRESS-SESSION ##### */
+import session from "express-session";
 /* ##### BRING IN FACTORY FUNCTION ##### */
 import greet from "./Greet.js";
 
@@ -29,7 +33,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 /* -------------------- USE BODY PARSER -------------------- */
 
+/* -------------------- USE SEESION MIDDLEWARE -------------------- */
+app.use(
+  session({
+    secret: "codingmkhululi",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+/* -------------------- USE FLASH MIDDLEWARE -------------------- */
+app.use(flash());
+
+// How to use express flash
+// app.get("/", function (req, res) {
+//   req.flash("message", "Success Message!!");
+//   res.redirect("/profile");
+// });
+// app.get("/profile", (req, res) => {
+//   res.send(req.flash("message"));
+// });
+
 /* -------------------- ALL ROUTES -------------------- */
+
 // CREATE HOME/DEFAULT ROUTE
 app.get("/", function (req, res) {
   res.render("home", {
@@ -41,8 +66,14 @@ app.get("/", function (req, res) {
 app.post("/greetings", function (req, res) {
   // send username to server each time 'greet btn' is clicked.
   Greet.setName(req.body.userInput);
-  // console.log(req.body.userInput);
   res.redirect("/");
+});
+// CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
+app.get("/greeted", (req, res) => {
+  // create a array with all greeted users
+  let usersArr = Greet.getGreetedUsers();
+  // send array to handlebars template on the greeted.handlebars file
+  res.render("greeted", { usersArr });
 });
 /* -------------------- ALL ROUTES -------------------- */
 
