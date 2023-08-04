@@ -42,6 +42,7 @@ export default function Greet() {
   let errorMsg = "";
   let firstLetter, restOfLetters;
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
+  const namesCountMap = {};
 
   function peopleCounter(username) {
     usernameTrimmed = username.trim();
@@ -65,6 +66,11 @@ export default function Greet() {
         let arrName = usernameTrimmed.toLowerCase().split("");
         [firstLetter, ...restOfLetters] = arrName;
         let capitalizeName = firstLetter.toUpperCase() + restOfLetters.join("");
+        if (namesCountMap[username] === undefined) {
+          namesCountMap[username] = 1;
+        } else {
+          namesCountMap[username]++;
+        }
         if (language === "isiZulu") {
           greetMsg = `Sawubona ${capitalizeName}`;
         } else if (language === "English") {
@@ -77,8 +83,12 @@ export default function Greet() {
       }
     }
   }
+
   function userGreetedIn() {
     return greetMsg;
+  }
+  function getNamesCountMap() {
+    return namesCountMap;
   }
   function displayErrorMsg(username, language) {
     if (username !== undefined) {
@@ -120,5 +130,6 @@ export default function Greet() {
     userGreetedIn,
     currentErrorMsg,
     getGreetedUsers,
+    getNamesCountMap,
   };
 }

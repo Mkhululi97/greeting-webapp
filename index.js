@@ -92,7 +92,15 @@ app.get("/greeted", (req, res) => {
   res.render("greeted", { users: usersArr });
 });
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
-app.get("/counter/:currentUsername", (req, res) => {});
+app.get("/counter/:currentUsername", (req, res) => {
+  // get current user
+  let user = req.params.currentUsername;
+  // get how many times current user was greeted.
+  let howManyTimesGreeted = Greet.getNamesCountMap()[user];
+  // create a string that shows how many times a user has been greeted.
+  let userMsg = `Hello, ${user} has been greeted ${howManyTimesGreeted} time/s`;
+  res.render("greeted", { greetedTimesMsg: userMsg });
+});
 // CREATE A ROUTE THAT RESTS THE GREETINGS APP
 app.post("/reset", (req, res) => {
   Greet.resetCounter();

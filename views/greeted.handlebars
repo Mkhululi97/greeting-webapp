@@ -3,12 +3,14 @@
   <table>
     <tr>
       <th>user</th>
-      <th>n.o of times</th>
     </tr>
     {{#each users}}
       <tr>
-        <td>{{this}}</td>
+        <td><a href="/counter/{{this}}">{{this}}</a></td>
       </tr>
     {{/each}}
+    <tr>
+      <td>{{greetedTimesMsg}}</td>
+    </tr>
   </table>
 </div>
