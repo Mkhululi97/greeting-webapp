@@ -55,10 +55,16 @@ button {
   padding: 10px 25px;
   border-radius: 4px;
 }
-.greet-me-btn {
+.greet-me-btn,
+.get-users-btn {
   border: none;
   background-color: #588157;
   color: #dad7cd;
+}
+.get-users-btn {
+  /* border: none;
+  background-color: #588157; */
+  margin-left: 20px;
 }
 .counter-text {
   font-size: 40px;
@@ -93,7 +99,8 @@ button {
   }
   label,
   .greet-me-btn,
-  .reset-btn {
+  .reset-btn,
+  .get-users-btn {
     font-size: 16px;
     font-weight: 400;
   }
