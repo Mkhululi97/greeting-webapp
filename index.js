@@ -87,7 +87,9 @@ app.post("/greetings", function (req, res) {
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
 app.get("/greeted", (req, res) => {
   // create a array with all greeted users
+  let usersArr = Greet.getGreetedUsers();
   // send array to handlebars template on the greeted.handlebars file
+  res.render("greeted", { users: usersArr });
 });
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
 app.get("/counter/:currentUsername", (req, res) => {});

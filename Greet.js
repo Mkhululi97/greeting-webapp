@@ -55,6 +55,9 @@ export default function Greet() {
   function peopleGreeted() {
     return greetCounter;
   }
+  function getGreetedUsers() {
+    return users;
+  }
   function greetUserWithLanguage(language, username) {
     if (username !== undefined) {
       usernameTrimmed = username.trim();
@@ -116,5 +119,6 @@ export default function Greet() {
     nameWithNumberError,
     userGreetedIn,
     currentErrorMsg,
+    getGreetedUsers,
   };
 }
