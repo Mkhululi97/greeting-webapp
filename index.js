@@ -74,7 +74,6 @@ app.get("/", function (req, res) {
     greetMsg: Greet.userGreetedIn(),
     counter: Greet.peopleGreeted(),
   });
-  // error: Greet.currentErrorMsg(),
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", function (req, res) {
@@ -83,7 +82,6 @@ app.post("/greetings", function (req, res) {
   Greet.greetUserWithLanguage(req.body.language, req.body.userInput);
   Greet.peopleCounter(req.body.userInput);
   Greet.displayErrorMsg(req.body.userInput, req.body.language);
-  // console.log(`lan:=>${req.body.language},nam:=>${req.body.userInput === ""}`);
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
@@ -95,7 +93,7 @@ app.get("/greeted", (req, res) => {
 app.get("/counter/:currentUsername", (req, res) => {});
 // CREATE A ROUTE THAT RESTS THE GREETINGS APP
 app.post("/reset", (req, res) => {
-  console.log(Greet.resetCounter());
+  Greet.resetCounter();
   res.redirect("/");
 });
 /* -------------------- ALL ROUTES -------------------- */

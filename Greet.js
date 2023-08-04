@@ -102,6 +102,8 @@ export default function Greet() {
   }
   function resetCounter() {
     greetCounter = 0;
+    greetMsg = "";
+    errorMsg = "";
     users = [];
   }
 
