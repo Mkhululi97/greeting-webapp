@@ -43,25 +43,6 @@ app.use(
 );
 /* -------------------- USE FLASH MIDDLEWARE -------------------- */
 app.use(flash());
-
-// How to use express flash
-// app.get("/", function (req, res) {
-//   req.flash("message", "Success Message!!");
-//   res.redirect("/profile");
-// });
-// app.get("/profile", (req, res) => {
-//   res.send(req.flash("message"));
-// });
-// app.get("/payment", (req, res) => {
-// first para is for message variable and second para
-//    is for the actual message.
-// req.flash("payment", "make the payments");
-// retrieve the actual message, by using the
-//    message variable name.
-// res.send(req.flash("payment"));
-// });
-// How to use express flash
-
 /* -------------------- ALL ROUTES -------------------- */
 
 // CREATE HOME/DEFAULT ROUTE

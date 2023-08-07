@@ -51,23 +51,20 @@ describe("Testing Greet Factory Function", function () {
   describe("Shows Error Message", function () {
     it("if the input field is empty", function () {
       let greet = Greet();
-      assert.equal(
-        "Please enter your name",
-        greet.displayErrorMsg("", "isiZulu")
-      );
+      greet.displayErrorMsg("", "isiZulu");
+      assert.equal("Please enter your name", greet.currentErrorMsg());
     });
     it("if the radio button is not selected", function () {
       let greet = Greet();
-      assert.equal(
-        "Please select a language",
-        greet.displayErrorMsg("Mkhululi", null)
-      );
+      greet.displayErrorMsg("Mkhululi", undefined);
+      assert.equal("Please select a language", greet.currentErrorMsg());
     });
     it("if the input field and the radio button is not selected", function () {
       let greet = Greet();
+      greet.displayErrorMsg("", undefined);
       assert.equal(
         "Please select a language and enter your name",
-        greet.displayErrorMsg("", null)
+        greet.currentErrorMsg()
       );
     });
     it("if the username includes a number or any special characters", function () {
@@ -98,7 +95,7 @@ describe("Testing Greet Factory Function", function () {
       greet.peopleCounter("Bheka");
       greet.peopleCounter("Kabelo");
       greet.resetCounter();
-      assert.equal(0, greet.peopleGreeted());
+      assert.equal(0, greet.resetCounter());
     });
   });
 });
