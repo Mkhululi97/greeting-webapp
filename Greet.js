@@ -8,6 +8,7 @@ export default function Greet(db) {
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
   let namesCountMap = {};
 
+  /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
   async function peopleCounter(username) {
     usernameTrimmed = username.trim();
     if (lettersOnlyRegex.test(usernameTrimmed)) {
@@ -36,9 +37,10 @@ export default function Greet(db) {
       }
     }
   }
-  /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
   async function peopleGreeted() {
+    // accumulate how many usernames are in the users table
     let counter = await db.oneOrNone("select count(user_name) from users");
+    // use this total as the over greet counter.
     greetCounter = counter.count;
     return greetCounter;
   }
@@ -50,7 +52,6 @@ export default function Greet(db) {
     // send a query that uses a dynamic username
     const query = "select user_counter from users where user_name = $1";
     const userData = await db.oneOrNone(query, [currentUser]);
-    // console.log(userData.user_counter);
     return userData;
   }
   /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/

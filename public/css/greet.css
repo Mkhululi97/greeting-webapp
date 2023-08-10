@@ -5,13 +5,20 @@
   margin: 0;
   box-sizing: border-box;
 }
+.container {
+  background: #344e41;
+  color: #dad7cd;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 body {
   background-color: #a3b18a;
   font-family: "Roboto", sans-serif;
 }
 article {
   text-align: center;
-  padding: 10px;
+  /* padding: 10px; */
 }
 .flex {
   display: flex;
@@ -24,23 +31,20 @@ div.flex {
 .hidden {
   display: none;
 }
-.counter-text,
-.output-str,
-.greeting,
-button,
-label {
-  color: #344e41;
-}
 .error-text {
   color: rgb(205, 9, 9);
-  font-size: 16px;
+  font-size: 22px;
+  text-transform: uppercase;
+  /* border: solid 2px red; */
+  padding: 2px;
+  /* background-color: #a3b18a; */
 }
-.greet-me-btn,
+button,
 .radio-btn {
   cursor: pointer;
 }
 .greeting {
-  border: 1px solid #344e41;
+  border: 1px solid #dad7cd;
   padding-block: 15px;
   margin-bottom: 20px;
   font-size: 30px;
@@ -59,13 +63,16 @@ button {
 .get-users-btn {
   border: none;
   background-color: #588157;
-  color: #dad7cd;
+  color: #fff;
 }
 .get-users-btn {
-  /* border: none;
-  background-color: #588157; */
   margin-left: 20px;
 }
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .counter-text {
   font-size: 40px;
   margin-block: 10px;
@@ -79,11 +86,26 @@ button {
 }
 .reset-btn {
   border: 1px solid #dad7cd;
+  background-color: #dad7cd;
 }
 .output-str {
   font-size: 20px;
   margin-bottom: 45px;
   font-weight: 500;
+}
+.column-heading {
+  text-align: left;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding-block-start: 20px;
+}
+.user-msg {
+  color: #dad7cd;
+  font-size: 18px;
+}
+.column-heading td a {
+  font-size: 200px;
 }
 @media (min-width: 788px) {
   .greeting {

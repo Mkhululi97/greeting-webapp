@@ -60,7 +60,7 @@ app.use(
 app.use(flash());
 /* -------------------- ALL ROUTES -------------------- */
 // CREATE HOME/DEFAULT ROUTE
-app.get("/", async function (req, res) {
+app.get("/", async (req, res) => {
   req.flash("errorText", Greet.currentErrorMsg());
   res.render("home", {
     // use the factory function thats responsible for returning greet
