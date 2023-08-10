@@ -80,11 +80,15 @@ app.post("/greetings", async function (req, res) {
   Greet.peopleCounter(username);
   Greet.displayErrorMsg(username, language);
   /* ------------------- DATABASE WORK ------------------- */
-  // try to get the database to only store the user once
+  // try to get the database to only store the user once,
   //  if the user is greeted twices, should ignore and
   //  not add the same user twice.
+  let greet_counter = Greet.peopleGreeted();
   !(Greet.getNamesCountMap()[username] > 1)
-    ? await db.none("insert into users (user_name) values ($1)", [username, 1])
+    ? await db.none(
+        "insert into users (user_name, greet_counter) values ($1, $2)",
+        [username, greet_counter]
+      )
     : "";
   /* ------------------- DATABASE WORK ------------------- */
   res.redirect("/");
