@@ -6,7 +6,7 @@ export default function Greet() {
   let errorMsg = "";
   let firstLetter, restOfLetters;
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
-  const namesCountMap = {};
+  let namesCountMap = {};
 
   function peopleCounter(username) {
     usernameTrimmed = username.trim();
@@ -14,6 +14,7 @@ export default function Greet() {
       if (!users.includes(usernameTrimmed.toLowerCase())) {
         greetCounter++;
         users.push(usernameTrimmed.toLowerCase());
+        return username;
       }
     }
   }
@@ -81,6 +82,7 @@ export default function Greet() {
     greetMsg = "";
     errorMsg = "";
     users = [];
+    namesCountMap = {};
     return (greetCounter = 0);
   }
 

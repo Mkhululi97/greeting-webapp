@@ -10,14 +10,28 @@ import flash from "express-flash";
 import session from "express-session";
 /* ##### BRING IN FACTORY FUNCTION ##### */
 import greet from "./Greet.js";
+/* ##### BRING IN PG-PROMISE ##### */
+import pgPromise from "pg-promise";
 
 /* -------------------- ALL INSTANCES -------------------- */
 /* INITIALIZE EXPRESS */
 const app = express();
 /* INITIALIZE GREET FACTORY FUNCTION */
 const Greet = greet();
+/* INITIALIZE GREET FACTORY FUNCTION */
+const pgp = pgPromise();
 /* -------------------- ALL INSTANCES -------------------- */
 
+// should we use a SSL connection
+let useSSL = false;
+let local = process.env.LOCAL || false;
+process.env.DATABASE_URL && !local ? (useSSL = true) : "";
+// which db connection to use
+const connectionString =
+  process.env.DATABASE_URL ||
+  "postgresql://sampleuser:pg123@localhost:5432/greetings";
+//connect to the db
+const db = pgp(connectionString);
 /* -------------------- SETUP ENGINE -------------------- */
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -57,12 +71,22 @@ app.get("/", function (req, res) {
   });
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
-app.post("/greetings", function (req, res) {
+app.post("/greetings", async function (req, res) {
   // send username, language, error message
   //   to server each time 'greet btn' is clicked.
-  Greet.greetUserWithLanguage(req.body.language, req.body.userInput);
-  Greet.peopleCounter(req.body.userInput);
-  Greet.displayErrorMsg(req.body.userInput, req.body.language);
+  let username = req.body.userInput;
+  let language = req.body.language;
+  Greet.greetUserWithLanguage(language, username);
+  Greet.peopleCounter(username);
+  Greet.displayErrorMsg(username, language);
+  /* ------------------- DATABASE WORK ------------------- */
+  // try to get the database to only store the user once
+  //  if the user is greeted twices, should ignore and
+  //  not add the same user twice.
+  !(Greet.getNamesCountMap()[username] > 1)
+    ? await db.none("insert into users (user_name) values ($1)", [username, 1])
+    : "";
+  /* ------------------- DATABASE WORK ------------------- */
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
