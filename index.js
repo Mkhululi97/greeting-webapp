@@ -16,8 +16,7 @@ import pgPromise from "pg-promise";
 /* -------------------- ALL INSTANCES -------------------- */
 /* INITIALIZE EXPRESS */
 const app = express();
-/* INITIALIZE GREET FACTORY FUNCTION */
-const Greet = greet();
+
 /* INITIALIZE GREET FACTORY FUNCTION */
 const pgp = pgPromise();
 /* -------------------- ALL INSTANCES -------------------- */
@@ -32,6 +31,8 @@ const connectionString =
   "postgresql://sampleuser:pg123@localhost:5432/greetings";
 //connect to the db
 const db = pgp(connectionString);
+/* INITIALIZE GREET FACTORY FUNCTION */
+const Greet = greet(db);
 /* -------------------- SETUP ENGINE -------------------- */
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -60,14 +61,16 @@ app.use(flash());
 /* -------------------- ALL ROUTES -------------------- */
 
 // CREATE HOME/DEFAULT ROUTE
-app.get("/", function (req, res) {
+app.get("/", async function (req, res) {
   req.flash("errorText", Greet.currentErrorMsg());
   res.render("home", {
     // use factory function responsible for returning greet
     //   messages. Set it to a variable to be used
     //   in the template.
     greetMsg: Greet.userGreetedIn(),
-    counter: Greet.peopleGreeted(),
+    /* ------------------- DATABASE WORK ------------------- */
+    counter: await Greet.peopleGreeted(),
+    /* ------------------- DATABASE WORK ------------------- */
   });
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
@@ -77,19 +80,10 @@ app.post("/greetings", async function (req, res) {
   let username = req.body.userInput;
   let language = req.body.language;
   Greet.greetUserWithLanguage(language, username);
-  Greet.peopleCounter(username);
   Greet.displayErrorMsg(username, language);
+
   /* ------------------- DATABASE WORK ------------------- */
-  // try to get the database to only store the user once,
-  //  if the user is greeted twices, should ignore and
-  //  not add the same user twice.
-  let greet_counter = Greet.peopleGreeted();
-  !(Greet.getNamesCountMap()[username] > 1)
-    ? await db.none(
-        "insert into users (user_name, greet_counter) values ($1, $2)",
-        [username, greet_counter]
-      )
-    : "";
+  await Greet.peopleCounter(username);
   /* ------------------- DATABASE WORK ------------------- */
   res.redirect("/");
 });

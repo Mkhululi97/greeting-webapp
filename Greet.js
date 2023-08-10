@@ -1,4 +1,4 @@
-export default function Greet() {
+export default function Greet(db) {
   let greetCounter = 0;
   let users = [];
   let usernameTrimmed = "";
@@ -8,17 +8,37 @@ export default function Greet() {
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
   let namesCountMap = {};
 
-  function peopleCounter(username) {
+  async function peopleCounter(username) {
     usernameTrimmed = username.trim();
     if (lettersOnlyRegex.test(usernameTrimmed)) {
-      if (!users.includes(usernameTrimmed.toLowerCase())) {
-        greetCounter++;
-        users.push(usernameTrimmed.toLowerCase());
-        return username;
+      // give us actual name in an object for existing users
+      //  or null, if its a new user.
+      let namecheck = await db.oneOrNone(
+        "select user_name from users where user_name = $1",
+        [usernameTrimmed]
+      );
+      // check if person was greeted before, then add person to the database
+      // else update the counter for the existing user.
+      if (namecheck === null) {
+        // if its a new user insert them to the table,
+        // and set their appearance to 1.
+        await db.none(
+          "insert into users (user_name, user_counter) values ($1, $2)",
+          [usernameTrimmed, 1]
+        );
+      } else {
+        // if its a existing user don't insert them
+        // to the table, and increment appearance by 1.
+        await db.none(
+          "update users set user_counter = user_counter + 1 where user_name = $1",
+          [usernameTrimmed]
+        );
       }
     }
   }
-  function peopleGreeted() {
+  async function peopleGreeted() {
+    let counter = await db.oneOrNone("select count(user_name) from users");
+    greetCounter = counter.count;
     return greetCounter;
   }
   function getGreetedUsers() {
@@ -78,12 +98,8 @@ export default function Greet() {
       return errorMsg;
     }
   }
-  function resetCounter() {
-    greetMsg = "";
-    errorMsg = "";
-    users = [];
-    namesCountMap = {};
-    return (greetCounter = 0);
+  async function resetCounter() {
+    await db.any("delete from users");
   }
 
   return {
