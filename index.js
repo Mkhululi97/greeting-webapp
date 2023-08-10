@@ -59,22 +59,22 @@ app.use(
 /* -------------------- USE FLASH MIDDLEWARE -------------------- */
 app.use(flash());
 /* -------------------- ALL ROUTES -------------------- */
-
 // CREATE HOME/DEFAULT ROUTE
 app.get("/", async function (req, res) {
   req.flash("errorText", Greet.currentErrorMsg());
   res.render("home", {
-    // use factory function responsible for returning greet
-    //   messages. Set it to a variable to be used
-    //   in the template.
+    // use the factory function thats responsible for returning greet
+    //   messages. Set it to a variable to be used in the template.
     greetMsg: Greet.userGreetedIn(),
     /* ------------------- DATABASE WORK ------------------- */
+    // use the factory function thats responsible for returning greet
+    //   people counted. Set it to a variable to be used in the template.
     counter: await Greet.peopleGreeted(),
     /* ------------------- DATABASE WORK ------------------- */
   });
 });
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
-app.post("/greetings", async function (req, res) {
+app.post("/greetings", async (req, res) => {
   // send username, language, error message
   //   to server each time 'greet btn' is clicked.
   let username = req.body.userInput;
@@ -88,20 +88,24 @@ app.post("/greetings", async function (req, res) {
   res.redirect("/");
 });
 // CREATE ROUTE THAT DISPLAYS ALL GREETED USERS
-app.get("/greeted", (req, res) => {
+app.get("/greeted", async (req, res) => {
   // create a array with all greeted users
-  let usersArr = Greet.getGreetedUsers();
+  let usersArr = await Greet.getGreetedUsers();
   // send array to handlebars template on the greeted.handlebars file
   res.render("greeted", { users: usersArr });
 });
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
-app.get("/counter/:currentUsername", (req, res) => {
+app.get("/counter/:currentUsername", async (req, res) => {
   // get current user
   let user = req.params.currentUsername;
-  // get how many times current user was greeted.
-  let howManyTimesGreeted = Greet.getNamesCountMap()[user];
+  // retrieve data from Factory Function, about how many times
+  //   the current user has been greeted.
+  let userCounterObj = await Greet.getNamesCountMap(user);
+  // select the value of the user_counter from the result
+  //   of retrieving data from the factory function.
+  let timesGreeted = userCounterObj["user_counter"];
   // create a string that shows how many times a user has been greeted.
-  let userMsg = `Hello, ${user} has been greeted ${howManyTimesGreeted} time/s`;
+  let userMsg = `Hello, ${user} has been greeted ${timesGreeted} time/s`;
   res.render("greeted", { greetedTimesMsg: userMsg });
 });
 // CREATE A ROUTE THAT RESTS THE GREETINGS APP

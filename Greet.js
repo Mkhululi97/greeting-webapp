@@ -36,14 +36,25 @@ export default function Greet(db) {
       }
     }
   }
+  /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
   async function peopleGreeted() {
     let counter = await db.oneOrNone("select count(user_name) from users");
     greetCounter = counter.count;
     return greetCounter;
   }
-  function getGreetedUsers() {
+  async function getGreetedUsers() {
+    users = await db.many("select user_name from users");
     return users;
   }
+  async function getNamesCountMap(currentUser) {
+    // send a query that uses a dynamic username
+    const query = "select user_counter from users where user_name = $1";
+    const userData = await db.oneOrNone(query, [currentUser]);
+    // console.log(userData.user_counter);
+    return userData;
+  }
+  /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
+
   function greetUserWithLanguage(language, username) {
     if (username !== undefined) {
       usernameTrimmed = username.trim();
@@ -72,9 +83,7 @@ export default function Greet(db) {
   function userGreetedIn() {
     return greetMsg;
   }
-  function getNamesCountMap() {
-    return namesCountMap;
-  }
+
   function displayErrorMsg(username, language) {
     if (username !== undefined) {
       username === "" ? (errorMsg = "Please enter your name") : "";
