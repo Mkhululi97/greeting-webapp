@@ -6,11 +6,10 @@ export default function Greet(db) {
   let errorMsg = "";
   let firstLetter, restOfLetters;
   const lettersOnlyRegex = /^[a-zA-Z]+$/;
-  let namesCountMap = {};
 
   /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
   async function peopleCounter(username) {
-    usernameTrimmed = username.trim();
+    usernameTrimmed = username.trim().toLowerCase();
     if (lettersOnlyRegex.test(usernameTrimmed)) {
       // give us actual name in an object for existing users
       //  or null, if its a new user.
@@ -40,7 +39,7 @@ export default function Greet(db) {
   async function peopleGreeted() {
     // accumulate how many usernames are in the users table
     let counter = await db.oneOrNone("select count(user_name) from users");
-    // use this total as the over greet counter.
+    // use this total as the overall greet counter.
     greetCounter = counter.count;
     return greetCounter;
   }
@@ -49,13 +48,14 @@ export default function Greet(db) {
     return users;
   }
   async function getNamesCountMap(currentUser) {
-    // send a query that uses a dynamic username
+    // send a query that uses a dynamic username,
+    // to get data about how many times that specific
+    // user was greeted.
     const query = "select user_counter from users where user_name = $1";
     const userData = await db.oneOrNone(query, [currentUser]);
     return userData;
   }
   /* --------------------------- MY ASYNC FUNCTIONS  ---------------------------*/
-
   function greetUserWithLanguage(language, username) {
     if (username !== undefined) {
       usernameTrimmed = username.trim();
@@ -63,11 +63,6 @@ export default function Greet(db) {
         let arrName = usernameTrimmed.toLowerCase().split("");
         [firstLetter, ...restOfLetters] = arrName;
         let capitalizeName = firstLetter.toUpperCase() + restOfLetters.join("");
-        if (namesCountMap[username] === undefined) {
-          namesCountMap[username] = 1;
-        } else {
-          namesCountMap[username]++;
-        }
         if (language === "isiZulu") {
           greetMsg = `Sawubona ${capitalizeName}`;
         } else if (language === "English") {
@@ -96,20 +91,26 @@ export default function Greet(db) {
         : "";
 
       username !== "" && language !== undefined ? (errorMsg = "") : "";
+
+      username !== "" &&
+      language !== undefined &&
+      !lettersOnlyRegex.test(usernameTrimmed)
+        ? (errorMsg = "Name should only contain letters")
+        : "";
     }
   }
   function currentErrorMsg() {
     return errorMsg;
   }
-  function nameWithNumberError(username) {
-    usernameTrimmed = username.trim();
-    if (!lettersOnlyRegex.test(usernameTrimmed)) {
-      errorMsg = "Name should only contain letters";
-      return errorMsg;
-    }
-  }
+  // function nameWithNumberError(username) {
+  //   usernameTrimmed = username.trim();
+  //   if (!lettersOnlyRegex.test(usernameTrimmed)) {
+  //     errorMsg = "Name should only contain letters";
+  //     return errorMsg;
+  //   }
+  // }
   async function resetCounter() {
-    await db.any("delete from users");
+    return await db.any("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
   }
 
   return {
@@ -118,7 +119,7 @@ export default function Greet(db) {
     greetUserWithLanguage,
     displayErrorMsg,
     resetCounter,
-    nameWithNumberError,
+    // nameWithNumberError,
     userGreetedIn,
     currentErrorMsg,
     getGreetedUsers,

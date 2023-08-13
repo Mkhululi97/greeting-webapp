@@ -17,7 +17,7 @@ import pgPromise from "pg-promise";
 /* INITIALIZE EXPRESS */
 const app = express();
 
-/* INITIALIZE GREET FACTORY FUNCTION */
+/* INITIALIZE PG PROMISE */
 const pgp = pgPromise();
 /* -------------------- ALL INSTANCES -------------------- */
 
