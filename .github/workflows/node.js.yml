@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: create postgresql tables
-        run: PGPASSWORD=pg123 psql -h localhost -U sampleuser -d greetings -a -f ../../sql/users.sql
+        run: PGPASSWORD=pg123 psql -h localhost -U sampleuser -d greetings -a -f ./users.sql
       - name: run tests with postgresql
         run: npm test
         env:
