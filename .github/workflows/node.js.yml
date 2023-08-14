@@ -41,4 +41,4 @@ jobs:
       - name: run tests with postgresql
         run: npm test
         env:
-          DATABASE_URL: postgres://sampleruser:pg123@localhost:5432/greetings
+          DATABASE_URL: postgres://sampleuser:pg123@localhost:5432/greetings
