@@ -8,7 +8,9 @@ import pgPromise from "pg-promise";
 
 /* INITIALIZE PG PROMISE */
 const pgp = pgPromise();
-
+let useSSL = false;
+let local = process.env.LOCAL || false;
+process.env.DATABASE_URL && !local ? (useSSL = true) : "";
 /* CREATE CONNECTION STRING. */
 const connectionString =
   process.env.DATABASE_URL ||
