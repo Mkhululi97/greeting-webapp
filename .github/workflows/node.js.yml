@@ -21,9 +21,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: sampleuser
-          POSTGRES_PASSWORD: pg123
-          POSTGRES_DB: greetings
+          PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
+          PGDATABASE: dbgreetingswebapp
+          PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
@@ -41,4 +41,6 @@ jobs:
       - name: run tests with postgresql
         run: npm test
         env:
-          DATABASE_URL: postgres://sampleuser:pg123@localhost:5432/greetings
+          PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
+          PGDATABASE: dbgreetingswebapp
+          PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
