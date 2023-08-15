@@ -1,23 +1,14 @@
-import Client from "pg";
+import pgPromise from "pg-promise";
 import dotenv from "dotenv";
 dotenv.config();
-const connectDb = async () => {
-  try {
-    const client = new Client({
-      user: process.env.PGUSER,
-      host: process.env.PGHOST,
-      database: process.env.PGDATABASE,
-      password: process.env.PGPASSWORD,
-      port: process.env.PGPORT,
-      ssl: true,
-    });
-    await client.connect();
-    const res = await client.query("SELECT * FROM users");
-    console.log(res);
-    await client.end();
-  } catch (error) {
-    console.log(error);
-  }
+const connectDb = {
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+  ssl: true,
 };
-connectDb();
-// export default connectDb;
+
+const db = pgPromise()(connectDb);
+export default db;
