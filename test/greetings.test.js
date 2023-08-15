@@ -3,20 +3,23 @@ import assert from "assert";
 /* ##### BRING IN THE FACTORY FUNCTION ##### */
 import Greet from "../Greet.js";
 
-/* ##### BRING IN PG-PROMIES ##### */
-import pgPromise from "pg-promise";
+// /* ##### BRING IN PG-PROMIES ##### */
+// import pgPromise from "pg-promise";
 
-/* INITIALIZE PG PROMISE */
-const pgp = pgPromise();
-let useSSL = false;
-let local = process.env.LOCAL || false;
-process.env.DATABASE_URL && !local ? (useSSL = true) : "";
-/* CREATE CONNECTION STRING. */
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgresql://sampleuser:pg123@localhost:5432/greetings";
+// // /* INITIALIZE PG PROMISE */
+// // const pgp = pgPromise();
+// // let useSSL = false;
+// // let local = process.env.LOCAL || false;
+// // process.env.DATABASE_URL && !local ? (useSSL = true) : "";
+// // /* CREATE CONNECTION STRING. */
+// // const connectionString =
+// //   process.env.DATABASE_URL ||
+// //   "postgresql://sampleuser:pg123@localhost:5432/greetings";
 
-const db = pgp(connectionString);
+// // const db = pgp(connectionString);
+
+/* ##### BRING IN THE DATABASE ##### */
+import db from "../database.js";
 
 describe("Testing Greet Factory Function", function () {
   /* ------------------------ TESTS CONNECTED TO THE DATABASE ------------------------ */
