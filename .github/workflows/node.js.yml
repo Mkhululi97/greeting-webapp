@@ -17,22 +17,9 @@ jobs:
       matrix:
         node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          PGDATABASE_URL: postgres://mkhululi97:gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr@dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp?ssl=true
-          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
-          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp?ssl=true
-          #PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    env:
+      PGDATABASE_URL: postgres://mkhululi97:gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr@dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp?ssl=true
+
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
@@ -43,6 +30,3 @@ jobs:
         run: npm test
         env:
           PGDATABASE_URL: postgres://mkhululi97:gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr@dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp?ssl=true
-          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
-          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/
-          #PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
