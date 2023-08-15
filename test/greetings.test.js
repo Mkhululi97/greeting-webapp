@@ -1,4 +1,4 @@
-/* ##### BRING IN ASSERT ##### */
+/* ####### BRING IN ASSERT ####### */
 import assert from "assert";
 /* ##### BRING IN THE FACTORY FUNCTION ##### */
 import Greet from "../Greet.js";
@@ -15,7 +15,6 @@ import Greet from "../Greet.js";
 // // const connectionString =
 // //   process.env.DATABASE_URL ||
 // //   "postgresql://sampleuser:pg123@localhost:5432/greetings";
-
 // // const db = pgp(connectionString);
 
 /* ##### BRING IN THE DATABASE ##### */
