@@ -21,9 +21,10 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
-          PGDATABASE: dbgreetingswebapp
-          PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
+          PGDATABASE_URL: postgres://mkhululi97:gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr@dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp
+          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
+          #PGDATABASE: dbgreetingswebapp
+          #PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
@@ -41,6 +42,7 @@ jobs:
       - name: run tests with postgresql
         run: npm test
         env:
-          PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
-          PGDATABASE: dbgreetingswebapp
-          PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
+          PGDATABASE_URL: postgres://mkhululi97:gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr@dpg-cj6g9macn0vc73a1k6h0-a.oregon-postgres.render.com/dbgreetingswebapp
+          #PGHOST: dpg-cj6g9macn0vc73a1k6h0-a
+          #PGDATABASE: dbgreetingswebapp
+          #PGPASSWORD: gsPG4LUB95oEEliIQIzZu1pMDxWjjhxr
