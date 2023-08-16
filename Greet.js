@@ -14,7 +14,7 @@ export default function Greet(db) {
       // give us actual name in an object for existing users
       //  or null, if its a new user.
       let namecheck = await db.oneOrNone(
-        "select user_name from users where user_name = $1",
+        "select user_name from users_schema.users where user_name = $1",
         [usernameTrimmed]
       );
       // check if person was greeted before, then add person to the database
@@ -23,14 +23,14 @@ export default function Greet(db) {
         // if its a new user insert them to the table,
         // and set their appearance to 1.
         await db.none(
-          "insert into users (user_name, user_counter) values ($1, $2)",
+          "insert into users_schema.users (user_name, user_counter) values ($1, $2)",
           [usernameTrimmed, 1]
         );
       } else {
         // if its a existing user don't insert them
         // to the table, and increment appearance by 1.
         await db.none(
-          "update users set user_counter = user_counter + 1 where user_name = $1",
+          "update users_schema.users set user_counter = user_counter + 1 where user_name = $1",
           [usernameTrimmed]
         );
       }
@@ -38,20 +38,23 @@ export default function Greet(db) {
   }
   async function peopleGreeted() {
     // accumulate how many usernames are in the users table
-    let counter = await db.oneOrNone("select count(user_name) from users");
+    let counter = await db.oneOrNone(
+      "select count(user_name) from users_schema.users"
+    );
     // use this total as the overall greet counter.
     greetCounter = counter.count;
     return greetCounter;
   }
   async function getGreetedUsers() {
-    users = await db.many("select user_name from users");
+    users = await db.many("select user_name from users_schema.users");
     return users;
   }
   async function getNamesCountMap(currentUser) {
     // send a query that uses a dynamic username,
     // to get data about how many times that specific
     // user was greeted.
-    const query = "select user_counter from users where user_name = $1";
+    const query =
+      "select user_counter from users_schema.users where user_name = $1";
     const userData = await db.oneOrNone(query, [currentUser]);
     return userData;
   }
@@ -110,7 +113,9 @@ export default function Greet(db) {
   //   }
   // }
   async function resetCounter() {
-    return await db.any("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
+    return await db.any(
+      "TRUNCATE TABLE users_schema.users RESTART IDENTITY CASCADE"
+    );
   }
 
   return {
