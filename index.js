@@ -10,29 +10,13 @@ import flash from "express-flash";
 import session from "express-session";
 /* ##### BRING IN FACTORY FUNCTION ##### */
 import greet from "./Greet.js";
-/* ##### BRING IN PG-PROMISE ##### */
-// import pgPromise from "pg-promise";
 /* ##### BRING IN THE DATABASE ##### */
 import db from "./database.js";
 
 /* -------------------- ALL INSTANCES -------------------- */
 /* INITIALIZE EXPRESS */
 const app = express();
-
-/* INITIALIZE PG PROMISE */
-// const pgp = pgPromise();
 /* -------------------- ALL INSTANCES -------------------- */
-
-// // should we use a SSL connection
-// let useSSL = false;
-// let local = process.env.LOCAL || false;
-// process.env.DATABASE_URL && !local ? (useSSL = true) : "";
-// // which db connection to use
-// const connectionString =
-//   process.env.DATABASE_URL ||
-//   "postgresql://sampleuser:pg123@localhost:5432/greetings";
-// //connect to the db
-// const db = pgp(connectionString);
 
 /* INITIALIZE GREET FACTORY FUNCTION */
 const Greet = greet(db);
@@ -116,8 +100,8 @@ app.post("/reset", (req, res) => {
   Greet.resetCounter();
   res.redirect("/");
 });
-/* -------------------- ALL ROUTES -------------------- */
 
+/* -------------------- ALL ROUTES -------------------- */
 // CREATE PORT VARIABLE
 const PORT = process.env.PORT || 3012;
 // GET NOTIFICATION WHEN APP SUCCESSFULLY STARTS

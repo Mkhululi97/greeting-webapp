@@ -1,23 +1,16 @@
+/* ##### BRING IN PG PROMISE ##### */
 import pgPromise from "pg-promise";
+/* ##### BRING IN THE DOTENV ##### */
 import dotenv from "dotenv";
+/* CONFIGURE THE ENVIROMENT VARIABLE FILE */
 dotenv.config();
-
+/* GRAB THE VARIABLES FROM THE .ENV FILE*/
 const connectDb = {
-  // user: process.env.PGUSER,
-  // host: process.env.PGHOST,
-  // database: process.env.PGDATABASE,
-  // password: process.env.PGPASSWORD,
-  // port: process.env.PGPORT,
-  // ssl: true,
   databaseurl: process.env.PGDATABASE_URL,
   ssl: { rejectUnauthorized: false },
 };
+/* CREATE YOUR DATABASE */
 const db = pgPromise()(connectDb);
-// console.log(db.connect());
-if (process.env.PGDATABASE_URL) {
-  console.log("DATABASE_URL is set:");
-} else {
-  console.log("DATABASE_URL is not set.");
-}
+/* CONNECT TO YOUR DATABASE */
 db.connect();
 export default db;
