@@ -10,6 +10,7 @@ const connectDb = {
   // port: process.env.PGPORT,
   // ssl: true,
   databaseurl: process.env.PGDATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 };
 const db = pgPromise()(connectDb);
 // console.log(db.connect());
