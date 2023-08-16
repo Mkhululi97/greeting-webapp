@@ -21,6 +21,13 @@ import Greet from "../Greet.js";
 import db from "../database.js";
 
 describe("Testing Greet Factory Function", function () {
+  this.timeout(6000);
+
+  beforeEach(async function () {
+    await db.none(
+      "TRUNCATE TABLE users_schema.users RESTART IDENTITY CASCADE;"
+    );
+  });
   /* ------------------------ TESTS CONNECTED TO THE DATABASE ------------------------ */
   /* ---- WORKING TESTS UNCOMMENT WHEN ALL TESTS PASS ---- */
   describe("Test peopleGreeted Function", function () {
