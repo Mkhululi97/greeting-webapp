@@ -105,14 +105,10 @@ export default function Greet(db) {
   function currentErrorMsg() {
     return errorMsg;
   }
-  // function nameWithNumberError(username) {
-  //   usernameTrimmed = username.trim();
-  //   if (!lettersOnlyRegex.test(usernameTrimmed)) {
-  //     errorMsg = "Name should only contain letters";
-  //     return errorMsg;
-  //   }
-  // }
+
   async function resetCounter() {
+    greetMsg = "";
+    errorMsg = "";
     return await db.any(
       "TRUNCATE TABLE users_schema.users RESTART IDENTITY CASCADE"
     );
@@ -124,7 +120,6 @@ export default function Greet(db) {
     greetUserWithLanguage,
     displayErrorMsg,
     resetCounter,
-    // nameWithNumberError,
     userGreetedIn,
     currentErrorMsg,
     getGreetedUsers,
