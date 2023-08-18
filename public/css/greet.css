@@ -34,7 +34,7 @@ div.flex {
 .error-text {
   color: rgb(205, 9, 9);
   font-size: 22px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   /* border: solid 2px red; */
   padding: 2px;
   /* background-color: #a3b18a; */
@@ -79,7 +79,7 @@ a {
   margin-left: 10px;
 }
 .radio-btns {
-  margin-bottom: 14px;
+  margin-top: 25px;
 }
 .radio-btn {
   margin-left: 14px;
@@ -90,7 +90,7 @@ a {
 }
 .output-str {
   font-size: 20px;
-  margin-bottom: 45px;
+  margin-bottom: 14px;
   font-weight: 500;
 }
 .column-heading {

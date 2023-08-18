@@ -13,6 +13,7 @@
         <form action="/greetings" method="POST">
           <label class="inputName" for="name">Please Enter Your Name:</label>
           <p class="error-text">{{messages.errorText}}</p>
+          <p class="output-str">{{greetMsg}}</p>
           <div class="flex">
             <input
               type="text"
@@ -20,10 +21,6 @@
               class="text-input"
               name="userInput"
             />
-          </div>
-          <div class="flex">
-            <button class="btn greet-me-btn" type="submit">Greet Me</button>
-            <h2 class="counter-text">{{counter}}</h2>
           </div>
           <div class="radio-btns">
             <input
@@ -48,7 +45,10 @@
             />
             <label for="radio">isiXhosa</label>
           </div>
-          <p class="output-str">{{greetMsg}}</p>
+          <div class="flex">
+            <button class="btn greet-me-btn" type="submit">Greet Me</button>
+            <h2 class="counter-text">{{counter}}</h2>
+          </div>
         </form>
         <div class="flex">
           <form action="/reset" method="POST">
