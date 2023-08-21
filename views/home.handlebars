@@ -9,10 +9,12 @@
   <body>
     <article>
       <div class="container">
+        <ion-icon name="arrow-back-outline"></ion-icon>
         <h1 class="greeting">Greeting</h1>
         <form action="/greetings" method="POST">
           <label class="inputName" for="name">Please Enter Your Name:</label>
           <p class="error-text">{{messages.errorText}}</p>
+          <p class="db-text">{{messages.clearDbText}}</p>
           <p class="output-str">{{greetMsg}}</p>
           <div class="flex">
             <input
@@ -58,5 +60,6 @@
         </div>
       </div>
     </article>
+    {{! <script src="frontendjs/index.js"></script> }}
   </body>
 </html>

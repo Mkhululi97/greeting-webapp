@@ -18,7 +18,6 @@ body {
 }
 article {
   text-align: center;
-  /* padding: 10px; */
 }
 .flex {
   display: flex;
@@ -31,13 +30,16 @@ div.flex {
 .hidden {
   display: none;
 }
+.error-text,
+.db-text {
+  font-size: 22px;
+  padding: 2px;
+}
 .error-text {
   color: rgb(205, 9, 9);
-  font-size: 22px;
-  /* text-transform: uppercase; */
-  /* border: solid 2px red; */
-  padding: 2px;
-  /* background-color: #a3b18a; */
+}
+.db-text {
+  color: #dad7cd;
 }
 button,
 .radio-btn {
@@ -72,7 +74,6 @@ a {
   text-decoration: none;
   color: #fff;
 }
-
 .counter-text {
   font-size: 40px;
   margin-block: 10px;
@@ -106,6 +107,9 @@ a {
 }
 .column-heading td a {
   font-size: 200px;
+}
+.user-navi {
+  margin-left: 10px;
 }
 @media (min-width: 788px) {
   .greeting {

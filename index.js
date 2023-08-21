@@ -14,13 +14,20 @@ import Greet from "./Greet.js";
 import db from "./database.js";
 /* ##### BRING IN GREETINGS ROUTE ##### */
 import routesFunctions from "./routes/greetingsRoute.js";
+/* ##### BRING IN DATABASE FACTORY FUNCTION ##### */
+import dbFunctions from "./Greetdb.js";
 
+/* -------------------- ALL INSTANCES -------------------- */
 /* INITIALIZE EXPRESS */
 const app = express();
+/* INITIALIZE FACTORY FUNCTION */
+const factoryFunc = Greet();
+/* INITIALIZE DATABASE FACTORY FUNCTION */
+const dbFunc = dbFunctions(db);
 /* -------------------- ALL INSTANCES -------------------- */
 
-/* INITIALIZE GREET FACTORY FUNCTION */
-// const Greet = greet(db);
+const greetingsRoute = routesFunctions(factoryFunc, dbFunc);
+
 /* -------------------- SETUP ENGINE -------------------- */
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -44,12 +51,12 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 /* -------------------- USE FLASH MIDDLEWARE -------------------- */
 app.use(flash());
+
 /* -------------------- ALL ROUTES -------------------- */
 // CREATE HOME/DEFAULT ROUTE
-const factoryFunction = Greet(db);
-const greetingsRoute = routesFunctions(factoryFunction);
 app.get("/", greetingsRoute.home);
 // CREATE ROUTE THAT SENDS DATA TO THE SERVER
 app.post("/greetings", greetingsRoute.greetings);
@@ -57,10 +64,10 @@ app.post("/greetings", greetingsRoute.greetings);
 app.get("/greeted", greetingsRoute.greeted);
 // CREATE A ROUTE THAT DISPLAYS HOW MANY TIMES A USER WAS GREETED
 app.get("/counter/:currentUsername", greetingsRoute.userCounter);
-// CREATE A ROUTE THAT RESTS THE GREETINGS APP
+// CREATE A ROUTE THAT RESETS THE GREETINGS APP
 app.post("/reset", greetingsRoute.reset);
-
 /* -------------------- ALL ROUTES -------------------- */
+
 // CREATE PORT VARIABLE
 const PORT = process.env.PORT || 3012;
 // GET NOTIFICATION WHEN APP SUCCESSFULLY STARTS
