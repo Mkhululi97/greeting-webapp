@@ -111,6 +111,9 @@ a {
 .user-navi {
   margin-left: 10px;
 }
+.lrg {
+  font-size: 98px;
+}
 @media (min-width: 788px) {
   .greeting {
     padding-block: 20px;

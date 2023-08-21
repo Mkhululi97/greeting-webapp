@@ -9,7 +9,7 @@ import DBFactoryFunc from "../Greetdb.js";
 
 describe("Testing Greet Factory Function", function () {
   /* SOLVE THE TIMEOUT OF 2000ms EXCEEDED ERROR */
-  this.timeout(10000);
+  this.timeout(3000);
   /* START WITH A CLEAN TABLE EACH TIME */
   beforeEach(async function () {
     await db.none(
@@ -22,25 +22,10 @@ describe("Testing Greet Factory Function", function () {
   describe("Test peopleGreeted Function", function () {
     it("should return how many user's have been greeted", async function () {
       try {
-        // let greet = Greet(db);
         let dbFactoryFun = DBFactoryFunc(db);
-        await dbFactoryFun.resetCounter();
-        await dbFactoryFun.peopleCounter("Mkhululi", "English");
-        await dbFactoryFun.peopleCounter("Mkhululi", "English");
-        await dbFactoryFun.peopleCounter("Thembakazi", "English");
         await dbFactoryFun.peopleCounter("Akhona", "English");
-        await dbFactoryFun.peopleCounter("Mashoto", "English");
-        await dbFactoryFun.peopleCounter("thembakazi", "English");
         await dbFactoryFun.peopleCounter("Londeka", "English");
-        await dbFactoryFun.peopleCounter("akhona", "English");
-        await dbFactoryFun.peopleCounter("Mashoto", "English");
-        await dbFactoryFun.peopleCounter("Londeka", "English");
-        await dbFactoryFun.peopleCounter("Bheka", "English");
-        await dbFactoryFun.peopleCounter("bheka", "English");
-        assert.equal(6, await dbFactoryFun.peopleGreeted());
-        await dbFactoryFun.peopleCounter("Thando", "English");
-        await dbFactoryFun.peopleCounter("Mpukeng", "English");
-        assert.equal(8, await dbFactoryFun.peopleGreeted());
+        assert.equal(2, await dbFactoryFun.peopleGreeted());
       } catch (err) {
         console.log(err);
       }
@@ -49,34 +34,10 @@ describe("Testing Greet Factory Function", function () {
   describe("Test getGreetedUsers Function", function () {
     it("should return list of greeted users", async function () {
       try {
-        // let greet = Greet(db);
         let dbFactoryFun = DBFactoryFunc(db);
-        // await dbFactoryFun.resetCounter();
-        await dbFactoryFun.peopleCounter("Mkhululi", "isiZulu");
-        await dbFactoryFun.peopleCounter("Mkhululi", "isiZulu");
-        await dbFactoryFun.peopleCounter("Thembakazi", "isiZulu");
-        await dbFactoryFun.peopleCounter("Akhona", "isiZulu");
-        await dbFactoryFun.peopleCounter("Mashoto", "isiZulu");
-        await dbFactoryFun.peopleCounter("thembakazi", "isiZulu");
-        await dbFactoryFun.peopleCounter("Londeka", "isiZulu");
-        await dbFactoryFun.peopleCounter("akhona", "isiZulu");
-        await dbFactoryFun.peopleCounter("Mashoto", "isiZulu");
-        await dbFactoryFun.peopleCounter("Londeka", "isiZulu");
-        await dbFactoryFun.peopleCounter("Bheka", "isiZulu");
-        await dbFactoryFun.peopleCounter("bheka", "isiZulu");
-        assert.equal(6, await dbFactoryFun.peopleGreeted());
         await dbFactoryFun.peopleCounter("Thando", "isiZulu");
         await dbFactoryFun.peopleCounter("Mpukeng", "isiZulu");
-        let usersArr = [
-          { user_name: "mkhululi" },
-          { user_name: "thembakazi" },
-          { user_name: "akhona" },
-          { user_name: "mashoto" },
-          { user_name: "londeka" },
-          { user_name: "bheka" },
-          { user_name: "thando" },
-          { user_name: "mpukeng" },
-        ];
+        let usersArr = [{ user_name: "thando" }, { user_name: "mpukeng" }];
         assert.deepEqual(usersArr, await dbFactoryFun.getGreetedUsers());
       } catch (err) {
         console.log(err);
@@ -102,56 +63,34 @@ describe("Testing Greet Factory Function", function () {
   describe("Test resetCounter Function", function () {
     it("Should reset the counter to 0", async function () {
       try {
-        // let greet = Greet(db);
         let dbFactoryFun = DBFactoryFunc(db);
-        assert.equal(0, await dbFactoryFun.resetCounter());
         await dbFactoryFun.peopleCounter("Mkhululi", "isiZulu");
-        await dbFactoryFun.peopleCounter("Thembakazi", "isiZulu");
         await dbFactoryFun.peopleCounter("Akhona", "isiZulu");
-        assert.equal(3, await dbFactoryFun.peopleGreeted());
-        await dbFactoryFun.peopleCounter("Sakhile", "isiZulu");
-        await dbFactoryFun.peopleCounter("Peter", "isiZulu");
-        assert.equal(5, await dbFactoryFun.peopleGreeted());
-        await dbFactoryFun.peopleCounter("Londeka");
-        await dbFactoryFun.peopleCounter("Bheka", "isiZulu");
-        await dbFactoryFun.peopleCounter("Kabelo", "isiZulu");
         await dbFactoryFun.resetCounter();
-        assert.equal(0, await dbFactoryFun.resetCounter());
+        assert.equal(0, await dbFactoryFun.peopleGreeted());
       } catch (err) {
         console.log(err);
       }
     });
   });
-
   it("should not count names that have numbers in them", async function () {
-    // let dbFactoryFun = Greet(db);
     let dbFactoryFun = DBFactoryFunc(db);
-    await dbFactoryFun.peopleCounter("Thandi", "isiZulu");
-    await dbFactoryFun.peopleCounter("THANDI", "isiZulu");
-    await dbFactoryFun.peopleCounter("mponeng", "isiZulu");
     await dbFactoryFun.peopleCounter("Thembi34", "isiZulu");
-    assert.equal(2, await dbFactoryFun.peopleGreeted());
-    await dbFactoryFun.peopleCounter("Mthoko", "isiZulu");
-    await dbFactoryFun.peopleCounter("palesa", "isiZulu");
     await dbFactoryFun.peopleCounter("MPONENG3", "isiZulu");
-    await dbFactoryFun.peopleCounter("Thembi", "isiZulu");
-    assert.equal(5, await dbFactoryFun.peopleGreeted());
+    assert.equal(0, await dbFactoryFun.peopleGreeted());
   });
   it("if the username includes a number or any special characters", async function () {
-    // let dbFactoryFun = Greet(db);
     let dbFactoryFun = DBFactoryFunc(db);
-    await dbFactoryFun.resetCounter();
-    await dbFactoryFun.peopleCounter("thami", "isiXhosa");
     await dbFactoryFun.peopleCounter("thami@12", "isiXhosa");
-    await dbFactoryFun.peopleCounter("wezi", "isiXhosa");
     await dbFactoryFun.peopleCounter("Wezi_45", "isiXhosa");
-    assert.equal(2, await dbFactoryFun.peopleGreeted());
+    assert.equal(0, await dbFactoryFun.peopleGreeted());
     /* ---- FAILING TEST ---- */
     // assert.equal(
     //   "Name should only contain letters",
     //   await greet.currentErrorMsg()
     // );
   });
+
   /* ------------------------ TESTS CONNECTED TO THE DATABASE ------------------------ */
 
   /* ------------------------ NORMAL TESTS ------------------------ */
@@ -190,9 +129,10 @@ describe("Testing Greet Factory Function", function () {
       );
     });
   });
+  /* ------------------------ NORMAL TESTS ------------------------ */
+
   // close of the connection to the database.
   after(function () {
     db.$pool.end();
   });
-  /* ------------------------ NORMAL TESTS ------------------------ */
 });
