@@ -1,18 +1,22 @@
 <div class="container">
-  <a href="/">HOME</a>
-  <a class="user-navi" href="/greeted">USERS</a>
-  <h1>GREETINGS LOVELY PEOPLE👋🏽</h1>
-  <table>
-    <tr>
-      <th class="column-heading">User</th>
-    </tr>
-    {{#each users}}
+  <div class="nav">
+    <a href="/">HOME</a>
+    <a class="user-navi" href="/greeted">USERS</a>
+  </div>
+  <h1 class="primary-heading-greetings">GREETINGS LOVELY PEOPLE👋🏽</h1>
+  <div class="table-div">
+    <table>
       <tr>
-        <td><a href="/counter/{{this.user_name}}">{{this.user_name}}</a></td>
+        <th class="column-heading">User</th>
       </tr>
-    {{/each}}
-    <tr>
-      <td class="user-msg">{{greetedTimesMsg}}</td>
-    </tr>
-  </table>
+      {{#each users}}
+        <tr>
+          <td><a href="/counter/{{this.user_name}}">{{this.user_name}}</a></td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td class="user-msg">{{greetedTimesMsg}}</td>
+      </tr>
+    </table>
+  </div>
 </div>

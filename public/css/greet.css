@@ -19,7 +19,8 @@ body {
 article {
   text-align: center;
 }
-.flex {
+.flex,
+.table-div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,9 +112,11 @@ a {
 .user-navi {
   margin-left: 10px;
 }
-.lrg {
-  font-size: 98px;
+.nav,
+.primary-heading-greetings {
+  text-align: center;
 }
+
 @media (min-width: 788px) {
   .greeting {
     padding-block: 20px;
